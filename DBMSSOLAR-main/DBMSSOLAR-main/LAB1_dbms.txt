@@ -1,0 +1,278 @@
+PHCOMPANY
+CREATE TABLE PHCOMPANY(CName VARCHAR(30), CAddress VARCHAR(50), CPhone_No BIGINT, PRIMARY KEY(CName));
+
+PHARMACY
+CREATE TABLE PHARMACY(PHName VARCHAR(30), PHPhone_No BIGINT, PHAddress VARCHAR(50), PRIMARY KEY(PHName));
+
+DRUG
+CREATE TABLE DRUG(TradeName VARCHAR(30), Formula VARCHAR(30), CName VARCHAR(30), PRIMARY KEY(TradeName), FOREIGN KEY(CName) REFERENCES PHCOMPANY(CName));
+
+DOCTOR
+CREATE TABLE DOCTOR(DSSN VARCHAR(10), DName VARCHAR(30), Speciality VARCHAR(30), ExpYr INT, PRIMARY KEY(DSSN));
+
+PATIENT
+CREATE TABLE PATIENT(PSSN VARCHAR(10), PName VARCHAR(30), PAge INT, PAddress VARCHAR(50),PRIMARY KEY(PSSN));
+
+
+CONTRACT_WITH
+CREATE TABLE CONTRACT_WITH(Start_Date DATE, End_Date DATE, Text VARCHAR(30), Supervisor VARCHAR(30), CName VARCHAR(30), PHName VARCHAR(30), PRIMARY KEY(CName, PHName), FOREIGN KEY(CName) REFERENCES PHCOMPANY(CName), FOREIGN KEY(PHName) REFERENCES PHARMACY(PHName));
+
+SELL
+CREATE TABLE SELL(Price FLOAT, PHName VARCHAR(30), TradeName VARCHAR(30), PRIMARY KEY(PHName, TradeName), FOREIGN KEY(PHName) REFERENCES PHARMACY(PHName), FOREIGN KEY(TradeName) REFERENCES DRUG(TradeName));
+
+
+PRESCRIBE
+CREATE TABLE PRESCRIBE(Date1 DATE,Quantity VARCHAR(20), DSSN VARCHAR(10), TradeName VARCHAR(30), PSSN VARCHAR(10), PRIMARY KEY(DSSN, TradeName, PSSN), FOREIGN KEY(DSSN) REFERENCES DOCTOR(DSSN), FOREIGN KEY(TradeName) REFERENCES DRUG(TradeName), FOREIGN KEY(PSSN) REFERENCES PATIENT(PSSN));
+
+CHECK1
+CREATE TABLE CHECK1(PSSN VARCHAR(10), DSSN VARCHAR(10), PRIMARY KEY(PSSN,DSSN), FOREIGN KEY(DSSN) REFERENCES DOCTOR(DSSN), FOREIGN 
+KEY(PSSN) REFERENCES PATIENT(PSSN));
+
+
+INSERTING DATA
+PHCOMPANY
+CONDITIONS
+1. ATLEAST ONE COMPANY’S ADDRESS MUST MATCH 10 COMPANIES PHARMACIES
+2. 
+
+INSERT INTO PHCOMPANY(CName, CAddress, CPhone_No) VALUES (CAD Pharma Inc, JP Nagar, Bengaluru, 8796541592);
+
+INSERT INTO PHCOMPANY(CName, CAddress, CPhone_No) VALUES (GNOSIS Pharmaceuticals,MG Road, 8745896321);
+
+INSERT INTO PHCOMPANY(CName, CAddress, CPhone_No) VALUES (Rivpra Pharmaceuticals, Koramangala, 7896541230);
+	
+INSERT INTO PHCOMPANY(CName, CAddress, CPhone_No) VALUES (Rexcin Pharmaceuticals, VijayNagar, 8745896320);
+
+INSERT INTO PHCOMPANY(CName, CAddress, CPhone_No) VALUES (hamicat Pharmaceuticals Inc, Marthahalli, 7965841230);
+
+
+
+PHARMACY
+CONDITIONS
+1. THERE MUST BE 10 PHARMACIES WITH SAME ADDRESS
+
+INSERT INTO PHARMACY(PHName, PHPhone_NO, PHAddress) VALUES (Ganesh Medicals, 8796541253, JP Nagar, Bengaluru);
+INSERT INTO PHARMACY(PHName, PHPhone_NO, PHAddress) VALUES (Radha Medicals, 8796541253, JP Nagar, Bengaluru);
+INSERT INTO PHARMACY(PHName, PHPhone_NO, PHAddress) VALUES (Megha Medicals, 8796541258, JP Nagar, Bengaluru);
+INSERT INTO PHARMACY(PHName, PHPhone_NO, PHAddress) VALUES (Apollo Pharmacy, 8796541230, JP Nagar, Bengaluru);
+INSERT INTO PHARMACY(PHName, PHPhone_NO, PHAddress) VALUES (NetMeds, 8956123458, JP Nagar, Bengaluru);
+INSERT INTO PHARMACY(PHName, PHPhone_NO, PHAddress) VALUES (PharmEasy, 8796420235, JP Nagar, Bengaluru);
+INSERT INTO PHARMACY(PHName, PHPhone_NO, PHAddress) VALUES (Smile Medicals, 8796541230, JP Nagar, Bengaluru);
+INSERT INTO PHARMACY(PHName, PHPhone_NO, PHAddress) VALUES (Good Pharmacy, 8958641230, JP Nagar, Bengaluru);
+INSERT INTO PHARMACY(PHName, PHPhone_NO, PHAddress) VALUES (Jaya Medicals, 9856471230, JP Nagar, Bengaluru);
+INSERT INTO PHARMACY(PHName, PHPhone_NO, PHAddress) VALUES (Sharil Medicals, 9654712308, JP Nagar, Bengaluru);
+INSERT INTO PHARMACY(PHName, PHPhone_NO, PHAddress) VALUES (Geeta Medicals, 9654712310, JP Nagar, Bengaluru);
+
+
+DRUG
+CONDITIONS
+1. 2 DRUG Cname must be from same PHCOMPANY
+INSERT INTO DRUG(TradeName, Formula, CName) VALUES (Dolo, Tablet, CAD Pharma Inc);
+INSERT INTO DRUG(TradeName, Formula, CName) VALUES (HHOmega, Capsule, CAD Pharma Inc);
+
+INSERT INTO DRUG(TradeName, Formula, CName) VALUES (nicip, Capsule, GNOSIS Pharmaceuticals);
+INSERT INTO DRUG(TradeName, Formula, CName) VALUES (combiflam, Capsule, Rivpra Pharmaceuticals);
+INSERT INTO DRUG(TradeName, Formula, CName) VALUES (Lubrex, Tablet, Rexcin Pharmaceuticals);
+INSERT INTO DRUG(TradeName, Formula, CName) VALUES (Dazit, Tablet, hamicat Pharmaceuticals Inc);
+
+
+
+DOCTOR
+CONDITIONS
+1. EYE SPECIALIST
+2. 1 DOCTOR MUST HAVE HIGHEST EXPERIENCE THAN OTHERS
+
+INSERT INTO DOCTOR(DSSN, DName, Speciality, ExpYr) VALUES (D101, Edmund, Eye Specialist, 10);
+
+INSERT INTO DOCTOR(DSSN, DName, Speciality, ExpYr) VALUES (D102, Anna, Cardiologist, 20);
+
+INSERT INTO DOCTOR(DSSN, DName, Speciality, ExpYr) VALUES (D103, Sneha, OrthoPedic Surgeon, 17);
+
+
+PATIENT
+CONDITIONS
+1. ATLEAST 1 PATIENT AGE = 20
+2. ATLEAST 21 PATIENTS MUST BE THERE
+  
+INSERT INTO PATIENT(PSSN, PName, PAge, PAddress) VALUES (P101, Isha, 20, MG Road);
+
+INSERT INTO PATIENT(PSSN, PName, PAge, PAddress) VALUES (P102, Aisha, 25, Koramanagala);
+
+INSERT INTO PATIENT(PSSN, PName, PAge, PAddress) VALUES (P103, Neha, 35, Kengeri);
+INSERT INTO PATIENT(PSSN, PName, PAge, PAddress) VALUES (P104, Radha, 22, Mailasandra);
+
+INSERT INTO PATIENT(PSSN, PName, PAge, PAddress) VALUES (P105, Ganga, 27, Pattanegere);
+
+INSERT INTO PATIENT(PSSN, PName, PAge, PAddress) VALUES (P106, Pallavi, 37, Jakkasandra);
+
+INSERT INTO PATIENT(PSSN, PName, PAge, PAddress) VALUES (P107, Yakshitha, 31, Lakkasandra);
+
+INSERT INTO PATIENT(PSSN, PName, PAge, PAddress) VALUES (P108, Ajay, 45, Laljinagar);
+
+INSERT INTO PATIENT(PSSN, PName, PAge, PAddress) VALUES (P109, Rahul, 18, Idiranagar);
+
+INSERT INTO PATIENT(PSSN, PName, PAge, PAddress) VALUES (P110, Shilpa, 59, RR Nagar);
+
+
+INSERT INTO PATIENT(PSSN, PName, PAge, PAddress) VALUES (P111, Tunga, 47, Attiguppe);
+
+INSERT INTO PATIENT(PSSN, PName, PAge, PAddress) VALUES (P112, Meghana, 56, HR Layout);
+
+INSERT INTO PATIENT(PSSN, PName, PAge, PAddress) VALUES (P113, Lehkana, 29, Deepanjali);
+
+INSERT INTO PATIENT(PSSN, PName, PAge, PAddress) VALUES (P114, Raksha, 39, whitefield);
+
+INSERT INTO PATIENT(PSSN, PName, PAge, PAddress) VALUES (P115, Nehal, 19, Marthahalli);
+
+INSERT INTO PATIENT(PSSN, PName, PAge, PAddress) VALUES (P116, Dhanush, 24, VV Puram);
+
+INSERT INTO PATIENT(PSSN, PName, PAge, PAddress) VALUES (P117, Nancy, 17, Church Street);
+
+INSERT INTO PATIENT(PSSN, PName, PAge, PAddress) VALUES (P118, Kalpana, 32, Brigate Road);
+
+INSERT INTO PATIENT(PSSN, PName, PAge, PAddress) VALUES (P119, Niharika, 37, VijayNagar);
+
+INSERT INTO PATIENT(PSSN, PName, PAge, PAddress) VALUES (P120, Sharath, 41, Jnanabharathi);
+
+INSERT INTO PATIENT(PSSN, PName, PAge, PAddress) VALUES (P121, Arjun, 48, Mysore Road);
+
+INSERT INTO PATIENT(PSSN, PName, PAge, PAddress) VALUES (P122, Alissa, 20, Laljinagar);
+
+CONTRACT_WITH
+INSERT INTO CONTRACT_WITH(Start_Date, End_Date, Text, Supervisor, CName, PHName)VALUES(2021-12-20,2021-12-20,contracts with Ganesh Medicals,saksha, CAD Pharma Inc,Ganesh Medicals);
+
+INSERT INTO CONTRACT_WITH(Start_Date, End_Date, Text, Supervisor, CName, PHName)VALUES(2022-05-21,2023-05-21,contracted with Radha Medicals,Anna, CAD Pharma Inc,Radha Medicals);
+
+INSERT INTO CONTRACT_WITH(Start_Date, End_Date, Text, Supervisor, CName, PHName)VALUES(2022-06-21,2023-06-21,contracted with Megha Medicals,William, CAD Pharma Inc,Megha Medicals);
+
+INSERT INTO CONTRACT_WITH(Start_Date, End_Date, Text, Supervisor, CName, PHName)VALUES(2022-05-22,2023-05-22,contract with Apollo Pharmacy ,Georgie, CAD Pharma Inc, Apollo Pharmacy);
+
+INSERT INTO CONTRACT_WITH(Start_Date, End_Date, Text, Supervisor, CName, PHName)VALUES(2022-07-21,2023-07-21,contracted with NetMeds,Shushmitha, CAD Pharma Inc, NetMeds);
+
+
+INSERT INTO CONTRACT_WITH(Start_Date, End_Date, Text, Supervisor, CName, PHName)VALUES(2022-05-27,2023-05-27,contracted with PharmEasy,Swasthik, CAD Pharma Inc,PharmEasy);
+
+INSERT INTO CONTRACT_WITH(Start_Date, End_Date, Text, Supervisor, CName, PHName)VALUES(2022-01-21,2023-01-21,contracted with Smile Medicals,Niveditha, CAD Pharma Inc,Smile Medicals);
+INSERT INTO CONTRACT_WITH(Start_Date, End_Date, Text, Supervisor, CName, PHName)VALUES("2022-01-21","2023-01-21","contracted with Smile Medicals","Nivedi
+tha", "CAD Pharma Inc","Smile Medicals");
+
+finishedtillhere
+INSERT INTO CONTRACT_WITH(Start_Date, End_Date, Text, Supervisor, CName, PHName)VALUES(“2022-05-30”,”2023-05-30”,”contracted with Good Pharmacy”,”Hari”, “CAD Pharma Inc”, “Good Pharmacy”);
+
+INSERT INTO CONTRACT_WITH(Start_Date, End_Date, Text, Supervisor, CName, PHName)VALUES(2022-08-02,2023-08-02,contracted with Geeta Medicals, Gauri, CAD Pharma Inc, Geeta Medicals);
+
+INSERT INTO CONTRACT_WITH(Start_Date, End_Date, Text, Supervisor, CName, PHName)VALUES(2022-07-21,2023-07-21,contracted with Jaya Medicals,Ashok, CAD Pharma Inc, Jaya Medicals);
+
+INSERT INTO CONTRACT_WITH(Start_Date, End_Date, Text, Supervisor, CName, PHName)VALUES(2022-05-25,2023-05-25,contracted with Sharil Medical, Sharanya, CAD Pharma Inc, Sharil Medicals);
+
+
+SELL
+CONDITIONS
+INSERT INTO SELL(Price, PHName, TradeName)VALUES(25,"Ganesh Medicals" ,"nicip");
+INSERT INTO SELL(Price, PHName, TradeName)VALUES(30,"Radha Medicals" ,"combiflam");
+INSERT INTO SELL(Price, PHName, TradeName)VALUES(35,"Megha Medicals", "Dazit");
+INSERT INTO SELL(Price, PHName, TradeName)VALUES(25,"Apollo Pharmacy", "nicip");
+INSERT INTO SELL(Price, PHName, TradeName)VALUES(35,	"NetMeds", "Dazit");
+INSERT INTO SELL(Price, PHName, TradeName)VALUES(30,"PharmEasy", "combiflam");
+INSERT INTO SELL(Price, PHName, TradeName)VALUES(89,"Smile Medicals", "Dolo");
+INSERT INTO SELL(Price, PHName, TradeName)VALUES(98,"Good Pharmacy", "Lubrex");
+INSERT INTO SELL(Price, PHName, TradeName)VALUES(123, "Jaya Medicals", "HHOmega");
+INSERT INTO SELL(Price, PHName, TradeName)VALUES(89,"Sharil Medicals", "Dolo");
+INSERT INTO SELL(Price, PHName, TradeName)VALUES(98,"Geeta Medicals", "Lubrex");
+
+PRESCRIBE
+CONDITIONS
+1. ATLEAST 1 DOCTOR = 21 DIFFERENT PATIENT GIVE  PRESCRIPTION EACH TIME 2 DIFFERENT TradeName but YEAR must be 2013
+
+INSERT INTO PRESCRIBE(DATE1, Quantity, DSSN, TradeName, PSSN)VALUES("2013-10-01","10Tablets", "D103","Dolo", "P101");
+
+INSERT INTO PRESCRIBE(DATE1, Quantity, DSSN, TradeName, PSSN)VALUES("2013-01-31", "20mg", "D103","HHOmega","P102");
+
+INSERT INTO PRESCRIBE(DATE1, Quantity, DSSN, TradeName, PSSN)VALUES("2013-02-08","10 Tablets", "D103","nicip", "P103");
+
+INSERT INTO PRESCRIBE(DATE1, Quantity, DSSN, TradeName, PSSN)VALUES("2013-12-02", "12 tablet", "D103","Dazit", "P104");
+
+INSERT INTO PRESCRIBE(DATE1, Quantity, DSSN, TradeName, PSSN)VALUES("2013-03-21", "3 tablet", "D103","Lubrex", "P105");
+
+INSERT INTO PRESCRIBE(DATE1, Quantity, DSSN, TradeName, PSSN)VALUES("2013-03-15", "6 Capsules",  "D103","combiflam", "P106");
+
+INSERT INTO PRESCRIBE(DATE1, Quantity, DSSN, TradeName, PSSN)VALUES("2013-08-04", "15 tablets", "D103","Dolo", "P107");
+
+INSERT INTO PRESCRIBE(DATE1, Quantity, DSSN, TradeName, PSSN)VALUES("2013-04-14", "12 capsules", "D103","nicip", "P108");
+
+INSERT INTO PRESCRIBE(DATE1, Quantity, DSSN, TradeName, PSSN)VALUES("2013-05-19", "15 tablets", "D103","Dazit", "P109");
+
+INSERT INTO PRESCRIBE(DATE1, Quantity, DSSN, TradeName, PSSN)VALUES("2013-05-17", "5 capsules", "D103","combiflam", "P110");
+
+INSERT INTO PRESCRIBE(DATE1, Quantity, DSSN, TradeName, PSSN)VALUES("2013-06-26", "1 tablet", "D103","Lubrex", "P111");
+
+INSERT INTO PRESCRIBE(DATE1, Quantity, DSSN, TradeName, PSSN)VALUES("2013-07-27", "1 capsule", "D103","HHOmega", "P112");
+INSERT INTO PRESCRIBE(DATE1, Quantity, DSSN, TradeName, PSSN)VALUES("2013-10-07", "6 tablets", "D103","Dazit", "P113");
+
+INSERT INTO PRESCRIBE(DATE1, Quantity, DSSN, TradeName, PSSN)VALUES("2013-01-08", "15 capsules", "D103","combiflam", "P114");
+
+INSERT INTO PRESCRIBE(DATE1, Quantity, DSSN, TradeName, PSSN)VALUES("2013-08-02", "3 tablets", "D103","Dolo", "P115");
+
+INSERT INTO PRESCRIBE(DATE1, Quantity, DSSN, TradeName, PSSN)VALUES("2013-09-12", "7 tablets", "D103","Lubrex", "P116");
+
+INSERT INTO PRESCRIBE(DATE1, Quantity, DSSN, TradeName, PSSN)VALUES("2013-09-06", "30 capsules", "D103","HHOmega", "P117");
+
+INSERT INTO PRESCRIBE(DATE1, Quantity, DSSN, TradeName, PSSN)VALUES("2013-10-11", "14 tablets", "D103","Dazit", "P118");
+
+INSERT INTO PRESCRIBE(DATE1, Quantity, DSSN, TradeName, PSSN)VALUES("2013-10-27", "21 capsules", "D103","combiflam", "P119");
+
+INSERT INTO PRESCRIBE(DATE1, Quantity, DSSN, TradeName, PSSN)VALUES("2013-11-30", "4 tables", "D103","Dolo", "P120");
+
+INSERT INTO PRESCRIBE(DATE1, Quantity, DSSN, TradeName, PSSN)VALUES("2013-11-28", "50 Capsules", "D103","HHOmega", "P121");
+
+CHECK1
+CONDITIONS
+1. EYE SPECIALIST = 20 YEAR PATIENT
+INSERT INTO CHECK1(PSSN,DSSN)VALUES("P101","D101");
+INSERT INTO CHECK1(PSSN,DSSN)VALUES("P101","D103");
+INSERT INTO CHECK1(PSSN,DSSN)VALUES("P102","D103");
+INSERT INTO CHECK1(PSSN,DSSN)VALUES("P103","D103");
+INSERT INTO CHECK1(PSSN,DSSN)VALUES("P104","D103");
+INSERT INTO CHECK1(PSSN,DSSN)VALUES("P105","D103");
+INSERT INTO CHECK1(PSSN,DSSN)VALUES("P106","D103");
+INSERT INTO CHECK1(PSSN,DSSN)VALUES("P107","D103");
+INSERT INTO CHECK1(PSSN,DSSN)VALUES("P108","D103");
+INSERT INTO CHECK1(PSSN,DSSN)VALUES("P109","D103");
+INSERT INTO CHECK1(PSSN,DSSN)VALUES("P110","D103");
+INSERT INTO CHECK1(PSSN,DSSN)VALUES("P111","D103");
+INSERT INTO CHECK1(PSSN,DSSN)VALUES("P112","D103");
+INSERT INTO CHECK1(PSSN,DSSN)VALUES("P113","D103");
+INSERT INTO CHECK1(PSSN,DSSN)VALUES("P114","D103");
+INSERT INTO CHECK1(PSSN,DSSN)VALUES("P115","D103");
+INSERT INTO CHECK1(PSSN,DSSN)VALUES("P116","D103");
+INSERT INTO CHECK1(PSSN,DSSN)VALUES("P117","D103");
+INSERT INTO CHECK1(PSSN,DSSN)VALUES("P118","D103");
+INSERT INTO CHECK1(PSSN,DSSN)VALUES("P119","D103");
+INSERT INTO CHECK1(PSSN,DSSN)VALUES("P120","D103");
+INSERT INTO CHECK1(PSSN,DSSN)VALUES("P121","D103");
+INSERT INTO CHECK1(PSSN,DSSN)VALUES("P121","D102");
+INSERT INTO CHECK1(PSSN,DSSN)VALUES("P122","D102");
+
+
+QUERIES
+1. List the details of patients who are 20 years old and have been checked by eye-specialist
+
+SELECT P.Pname, D.DName FROM PATIENT P, DOCTOR D, CHECK1 CH WHERE P.PSSN=CH.PSSN AND CH.DSSN=D.DSSN AND PAge=20 AND Speciality="Eye Specialist";
+
+SELECT P.Pname, D.DName FROM PATIENT P, DOCTOR D, CHECK1 CH WHERE P.PSSN=CH.PSSN AND CH.DSSN=D.DSSN AND Page=20;
+2. LIST THE DETAILS OF DOCTORS WHO HAVE GIVEN THE PRESCRIPTION TO MORE THAN 20 PATIENTS IN YEAR 2013
+
+SELECT D.DName,COUNT(PS.DSSN) FROM DOCTOR D, PRESCRIBE PS, PATIENT P WHERE PS.Date1>"2012-12-31" AND PS.Date1<"2014-01-01" AND D.DSSN = PS.DSSN AND PS.PSSN=P.PSSN GROUP BY(PS.DSSN) HAVING COUNT(PS.DSSN)>=20;
+3. RETRIEVE THE DETAILS OF DOCTOR HAVING MAXIMUM EXPERIENCE;
+
+SELECT D.* FROM DOCTOR D WHERE D.ExpYr = (SELECT MAX(D.ExpYr) FROM DOCTOR D);
+
+4. List the details of pharmaceutical companies who supply drug to more than 10 pharmacies in the same city where company is located.
+SELECT C.CName, count(CW.CName) FROM PHCOMPANY C, PHARMACY PH, CONTRACT_WITH CW WHERE C.CName = CW.CName AND CW.PHName = PH.PHName GROUP BY(CW.CName) HAVING COUNT(CW.CName) > 10;
+
+
+5. list the details of drug supplied by only one pharmaceuticals company.
+
+6. List the details of specific drug available in pharmacies.
+
+
